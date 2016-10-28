@@ -1,7 +1,6 @@
 /* global location */
 /* eslint class-methods-use-this: 0 */
 
-import UUID from 'uuid';
 import qs from 'qs';
 import React from 'react';
 import { Provider } from '@kadira/storybook-ui';
@@ -9,18 +8,22 @@ import addons from '@kadira/storybook-addons';
 import createChannel from '@kadira/storybook-channel-postmsg';
 import Preview from './preview';
 
+// addons.setPreview(() => (<div>KKR</div>));
+
 export default class ReactProvider extends Provider {
   constructor() {
     super();
-    this.dataId = UUID.v4();
-    this.channel = createChannel({ key: this.dataId });
+    this.channel = createChannel();
     addons.setChannel(this.channel);
-    addons.setPreview((k, s) => this._getPreview(k, s));
+
+    // Set the default preview if not provided from an addon.
+    if (!addons.getPreview()) {
+      addons.setPreview((k, s) => this._getDefaultPreview(k, s));
+    }
   }
 
-  _getPreview(selectedKind, selectedStory) {
+  _getDefaultPreview(selectedKind, selectedStory) {
     const queryParams = {
-      dataId: this.dataId,
       selectedKind,
       selectedStory,
     };

@@ -63,10 +63,7 @@ var context = { storyStore: storyStore, reduxStore: reduxStore };
 
 if (isBrowser) {
   var queryParams = _qs2.default.parse(window.location.search.substring(1));
-  if (!queryParams.dataId) {
-    throw new Error('dataId is not supplied via queryString');
-  }
-  var channel = (0, _storybookChannelPostmsg2.default)({ key: queryParams.dataId });
+  var channel = (0, _storybookChannelPostmsg2.default)();
   channel.on('setCurrentStory', function (data) {
     reduxStore.dispatch((0, _actions.selectStory)(data.kind, data.story));
   });
