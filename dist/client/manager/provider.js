@@ -48,8 +48,6 @@ var _preview2 = _interopRequireDefault(_preview);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// addons.setPreview(() => (<div>KKR</div>));
-
 /* global location */
 /* eslint class-methods-use-this: 0 */
 

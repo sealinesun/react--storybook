@@ -8,8 +8,6 @@ import addons from '@kadira/storybook-addons';
 import createChannel from '@kadira/storybook-channel-postmsg';
 import Preview from './preview';
 
-// addons.setPreview(() => (<div>KKR</div>));
-
 export default class ReactProvider extends Provider {
   constructor() {
     super();
