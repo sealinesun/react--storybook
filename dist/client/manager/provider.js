@@ -63,17 +63,15 @@ var ReactProvider = function (_Provider) {
     _this.dataId = _uuid2.default.v4();
     _this.channel = (0, _storybookChannelPostmsg2.default)({ key: _this.dataId });
     _storybookAddons2.default.setChannel(_this.channel);
+    _storybookAddons2.default.setPreview(function (k, s) {
+      return _this._getPreview(k, s);
+    });
     return _this;
   }
 
   (0, _createClass3.default)(ReactProvider, [{
-    key: 'getPanels',
-    value: function getPanels() {
-      return _storybookAddons2.default.getPanels();
-    }
-  }, {
-    key: 'renderPreview',
-    value: function renderPreview(selectedKind, selectedStory) {
+    key: '_getPreview',
+    value: function _getPreview(selectedKind, selectedStory) {
       var queryParams = {
         dataId: this.dataId,
         selectedKind: selectedKind,
@@ -83,6 +81,17 @@ var ReactProvider = function (_Provider) {
       var queryString = _qs2.default.stringify(queryParams);
       var url = 'iframe.html?' + queryString;
       return _react2.default.createElement(_preview2.default, { url: url });
+    }
+  }, {
+    key: 'getPanels',
+    value: function getPanels() {
+      return _storybookAddons2.default.getPanels();
+    }
+  }, {
+    key: 'renderPreview',
+    value: function renderPreview(selectedKind, selectedStory) {
+      var previewBuilder = _storybookAddons2.default.getPreview();
+      return previewBuilder(selectedKind, selectedStory);
     }
   }, {
     key: 'handleAPI',

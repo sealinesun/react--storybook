@@ -15,13 +15,10 @@ export default class ReactProvider extends Provider {
     this.dataId = UUID.v4();
     this.channel = createChannel({ key: this.dataId });
     addons.setChannel(this.channel);
+    addons.setPreview((k, s) => this._getPreview(k, s));
   }
 
-  getPanels() {
-    return addons.getPanels();
-  }
-
-  renderPreview(selectedKind, selectedStory) {
+  _getPreview(selectedKind, selectedStory) {
     const queryParams = {
       dataId: this.dataId,
       selectedKind,
@@ -33,6 +30,15 @@ export default class ReactProvider extends Provider {
     return (
       <Preview url={url} />
     );
+  }
+
+  getPanels() {
+    return addons.getPanels();
+  }
+
+  renderPreview(selectedKind, selectedStory) {
+    const previewBuilder = addons.getPreview();
+    return previewBuilder(selectedKind, selectedStory);
   }
 
   handleAPI(api) {
